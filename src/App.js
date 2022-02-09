@@ -1,25 +1,66 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Signup from "./signup";
+import Navbar from "./navbar";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Signin from './signin';
+import HomePage from './homepage';
 
-function App() {
+
+export default function App() {
+
+  const priceList = [
+    {
+      name: "Dell",
+      price: "$123",
+      condition: true
+    },
+    {
+      name: "HP",
+      price: "$113",
+      condition: false
+    },
+    {
+      name: "mac",
+      price: "$123",
+      condition: false
+    },
+    {
+      name: "Lenova",
+      price: "$123",
+      condition: false
+    }
+  ]
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+     
+        <Navbar />
+          <Switch>
+            <Route path="/signup" component={Signup} exact />
+            <Route path="/signin" component={Signin} exact />
+            <Route path="/" component={HomePage} exact />
+              {
+                priceList.map((obj) => {
+                  if(obj.condition) {
+                    return(
+                      <Signup data= {obj}> </Signup>
+                    )
+                  } else{
+                    return(
+                      <h1>None</h1>
+                    )
+                  }
+                })
+              }
+          </Switch>
+      </Router>
     </div>
   );
 }
 
-export default App;
+
